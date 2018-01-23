@@ -160,20 +160,20 @@ namespace Xy.Isdc.IdentityServer
                     //    ClientSecret = 1000
                     //};
                     //用户交互页面定向设置处理
-                    idroptions.UserInteraction = new IdentityServer4.Configuration.UserInteractionOptions
-                    {
-                        LoginUrl = customUrl + "/Account/Login", //【必备】登录地址  
-                        LogoutUrl = customUrl + "/Account/Logout", //【必备】退出地址 
-                        ConsentUrl = customUrl + "/Account/Consent", //【必备】允许授权同意页面地址
-                        ErrorUrl = customUrl + "/Account/Error", //【必备】错误页面地址
-                        LoginReturnUrlParameter = "returnUrl", //【必备】设置传递给登录页面的返回URL参数的名称。默认为returnUrl 
-                        LogoutIdParameter = "logoutId", //【必备】设置传递给注销页面的注销消息ID参数的名称。缺省为logoutId 
-                        ConsentReturnUrlParameter = "returnUrl", //【必备】设置传递给同意页面的返回URL参数的名称。默认为returnUrl
-                        ErrorIdParameter = "errorId", //【必备】设置传递给错误页面的错误消息ID参数的名称。缺省为errorId
-                        CustomRedirectReturnUrlParameter = "returnUrl", //【必备】设置从授权端点传递给自定义重定向的返回URL参数的名称。默认为returnUrl
-                        CookieMessageThreshold =
-                            5 //【必备】由于浏览器对Cookie的大小有限制，设置Cookies数量的限制，有效的保证了浏览器打开多个选项卡，一旦超出了Cookies限制就会清除以前的Cookies值
-                    };
+                    //idroptions.UserInteraction = new IdentityServer4.Configuration.UserInteractionOptions
+                    //{
+                    //    LoginUrl = customUrl + "/Account/Login", //【必备】登录地址  
+                    //    LogoutUrl = customUrl + "/Account/Logout", //【必备】退出地址 
+                    //    ConsentUrl = customUrl + "/Account/Consent", //【必备】允许授权同意页面地址
+                    //    ErrorUrl = customUrl + "/Account/Error", //【必备】错误页面地址
+                    //    LoginReturnUrlParameter = "returnUrl", //【必备】设置传递给登录页面的返回URL参数的名称。默认为returnUrl 
+                    //    LogoutIdParameter = "logoutId", //【必备】设置传递给注销页面的注销消息ID参数的名称。缺省为logoutId 
+                    //    ConsentReturnUrlParameter = "returnUrl", //【必备】设置传递给同意页面的返回URL参数的名称。默认为returnUrl
+                    //    ErrorIdParameter = "errorId", //【必备】设置传递给错误页面的错误消息ID参数的名称。缺省为errorId
+                    //    CustomRedirectReturnUrlParameter = "returnUrl", //【必备】设置从授权端点传递给自定义重定向的返回URL参数的名称。默认为returnUrl
+                    //    CookieMessageThreshold =
+                    //        5 //【必备】由于浏览器对Cookie的大小有限制，设置Cookies数量的限制，有效的保证了浏览器打开多个选项卡，一旦超出了Cookies限制就会清除以前的Cookies值
+                    //};
                     //缓存参数处理  缓存起来提高了效率 不用每次从数据库查询
                     //idroptions.Caching = new IdentityServer4.Configuration.CachingOptions
                     //{
@@ -213,6 +213,7 @@ namespace Xy.Isdc.IdentityServer
                 //AddDeveloperSigningCredential在启动时创建临时密钥材料。这是仅用于开发场景，当您没有证书使用。
                 //生成的密钥将被保存到文件系统，以便在服务器重新启动之间保持稳定（可以通过传递来禁用false）。
                 //这解决了在开发期间client / api元数据缓存不同步的问题
+                
                 .AddDeveloperSigningCredential()
                 //添加验证令牌的密钥。它们将被内部令牌验证器使用，并将显示在发现文档中。
                 //您可以从证书存储中传入X509Certificate2一个SigningCredential或一个证书引用。这对于关键的转换场景很有用

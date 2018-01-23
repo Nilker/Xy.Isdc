@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Xy.Isdc.IdentityServer
+namespace Xy.Isdc.Client
 {
     public class Program
     {
@@ -21,11 +21,7 @@ namespace Xy.Isdc.IdentityServer
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseKestrel(s =>
-                {
-                    //端口设置
-                    s.Listen(IPAddress.Loopback, 5000);
-                })
+                .UseKestrel(s=> { s.Listen(IPAddress.Loopback, 5002); })
                 .Build();
     }
 }
