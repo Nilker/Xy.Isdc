@@ -267,6 +267,7 @@ namespace Xy.Isdc.IdentityServer
                     options.EnableTokenCleanup = true; //允许对Token的清理
                     options.TokenCleanupInterval = 1800; //清理周期时间Secends
                 })
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
 
                 .AddAspNetIdentity<ApplicationUser>(); ;
 

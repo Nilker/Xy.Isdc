@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Xy.Isdc.WebApi.AF;
 
 namespace Xy.Isdc.WebApi
 {
@@ -23,7 +24,10 @@ namespace Xy.Isdc.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(s =>
+            {
+                s.Filters.Add(new TestAuthorizationFilter());
+            });
 
             /*
              * 方法一：add by lhl 2018年1月24日10:00:09

@@ -5,11 +5,13 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Xy.Isdc.WebApi.AF;
 
 namespace Xy.Isdc.WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
+    [TestAuthorize("User_Edit")]
     public class ValuesController : Controller
     {
         // GET api/values

@@ -36,7 +36,7 @@ namespace Xy.Isdc.IdentityServer.OAuth
 
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 
-                    RequireConsent = false,
+                    RequireConsent = false, //禁用 consent 页面确认
 
                     ClientSecrets =
                     {
@@ -75,6 +75,9 @@ namespace Xy.Isdc.IdentityServer.OAuth
             return new List<ApiResource>
             {
                 new ApiResource("api1", "My API")
+                {
+                    UserClaims = new List<string>(){"Role"}
+                }
             };
         }
     }
