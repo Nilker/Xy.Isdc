@@ -30,17 +30,17 @@ namespace Xy.Isdc.Client
             services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = "Cookies";
-                    options.DefaultChallengeScheme = "oidc";
+                    options.DefaultChallengeScheme = "oidc";//因为当我们需要用户登录时，我们将使用OpenID Connect方案。
                 })
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
                     options.SignInScheme = "Cookies";
 
-                    options.Authority = "http://localhost:5000";//授权服务器地址
+                    options.Authority = "http://localhost:5000";//授权服务器地址 表示id4服务的地址
                     options.RequireHttpsMetadata = false;//是否是https
 
-                    options.ClientId = "mvc";
+                    options.ClientId = "mvc"; //识别该客户端
                     options.ClientSecret = "secret";
                     options.ResponseType = "code id_token";
 

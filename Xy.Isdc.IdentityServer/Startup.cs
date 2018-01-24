@@ -131,7 +131,7 @@ namespace Xy.Isdc.IdentityServer
                     idroptions.Authentication = new IdentityServer4.Configuration.AuthenticationOptions
                     {
                         //监控浏览器cookie不难发现lym.Cookies=8660972474e55224ff37f7421c79a530 实际是cookie记录服务器session的名称
-                        CheckSessionCookieName = "lym.Cookies", //用于检查会话端点的cookie的名称
+                        CheckSessionCookieName = "lhl.Cookies", //用于检查会话端点的cookie的名称
                         CookieLifetime = new TimeSpan(1, 0, 0), //身份验证Cookie生存期（仅在使用IdentityServer提供的Cookie处理程序时有效）
                         CookieSlidingExpiration = true, //指定cookie是否应该滑动（仅在使用IdentityServer提供的cookie处理程序时有效）
                         RequireAuthenticatedUserForSignOutMessage = true //指示是否必须对用户进行身份验证才能接受参数以结束会话端点。默认为false
@@ -297,13 +297,12 @@ namespace Xy.Isdc.IdentityServer
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            //使用IdentityServer4
-            app.UseIdentityServer();
-
+           
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            // app.UseAuthentication(); // not needed, since UseIdentityServer adds the authentication middleware
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {

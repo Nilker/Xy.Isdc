@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Xy.Isdc.Client.Models;
 
 namespace Xy.Isdc.Client.Controllers
 {
+    
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -21,6 +25,18 @@ namespace Xy.Isdc.Client.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> CallApiUsingUserAccessToken()
+        {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var content = await client.GetStringAsync("http://localhost:5001/Api/Values");
+
+            ViewBag.Json = JArray.Parse(content).ToString();
+            return View("Login");
+        }
 
         public IActionResult About()
         {
