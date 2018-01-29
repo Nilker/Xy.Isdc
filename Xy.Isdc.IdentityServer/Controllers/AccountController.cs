@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -64,6 +65,23 @@ namespace Xy.Isdc.IdentityServer.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+
+                    // only set explicit expiration here if user chooses "remember me". 
+                    // otherwise we rely upon expiration configured in cookie middleware.
+                    AuthenticationProperties props = null;
+                    if ( model.RememberMe)
+                    {
+                        props = new AuthenticationProperties
+                        {
+                            IsPersistent = true
+                        };
+                    };
+
+                    var user = _signInManager.UserManager.FindByNameAsync((model.Email)).Result;
+                    // issue authentication cookie with subject ID and username
+                    await HttpContext.SignInAsync(user.Id, user.UserName, props, new Claim("role", "aaaa"));
+
+
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }

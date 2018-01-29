@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
+using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Http;
 
@@ -12,23 +13,40 @@ namespace Xy.Isdc.IdentityServer.OAuth
 {
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
-        //private readonly IUserService _userService;
+        public ResourceOwnerPasswordValidator()
+        {
 
-        //public ResourceOwnerPasswordValidator(IUserService userService)
-        //{
-        //    _userService = userService;
-        //}
+        }
 
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
-            context.Result=new GrantValidationResult();
+            //根据context.UserName和context.Password与数据库的数据做校验，判断是否合法
+            if (context.UserName == "wjk" && context.Password == "123")
+            {
+                context.Result = new GrantValidationResult(
+                    subject: context.UserName,
+                    authenticationMethod: "custom",
+                    claims: GetUserClaims());
+            }
+            else
+            {
 
-            //var user = context.  await _userService.Login(context.UserName, context.Password);
-            //if (user != null)
-            //{
-            //    var claims = new List<Claim>() { new Claim("role", "admin") }; //根据 user 对象，设置不同的 role
-            //    context.Result = new GrantValidationResult(user.UserId.ToString(), OidcConstants.AuthenticationMethods.Password, claims);
-            //}
+                //验证失败
+                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "invalid custom credential");
+            }
+        }
+        //可以根据需要设置相应的Claim
+        private Claim[] GetUserClaims()
+        {
+            return new Claim[]
+            {
+                new Claim("UserId", 1.ToString()),
+                new Claim(JwtClaimTypes.Name,"wjk"),
+                new Claim(JwtClaimTypes.GivenName, "jaycewu"),
+                new Claim(JwtClaimTypes.FamilyName, "yyy"),
+                new Claim(JwtClaimTypes.Email, "977865769@qq.com"),
+                new Claim(JwtClaimTypes.Role,"admin")
+            };
         }
     }
 }
